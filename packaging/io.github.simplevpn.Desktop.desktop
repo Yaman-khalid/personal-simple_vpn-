@@ -1,0 +1,12 @@
+[Desktop Entry]
+Type=Application
+Name=Simple VPN
+Comment=Connect using your Proton OpenVPN configuration
+Exec=simple-vpn
+TryExec=simple-vpn
+Icon=io.github.simplevpn.Desktop
+Terminal=false
+Categories=Network;
+Keywords=VPN;Proton;OpenVPN;
+StartupNotify=true
+StartupWMClass=io.github.simplevpn.Desktop
