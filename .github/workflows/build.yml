@@ -1,0 +1,37 @@
+name: Check and build Ubuntu package
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  package:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      - name: Install test and build dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y python3-gi gir1.2-gtk-4.0 gir1.2-adw-1 gir1.2-nm-1.0 gir1.2-secret-1 network-manager-openvpn-gnome desktop-file-utils fakeroot xvfb dbus-x11
+      - name: Check isolated unit and package lifecycle tests
+        run: /usr/bin/python3 -B -m unittest discover -v
+      - name: Build package and validate desktop entry
+        run: |
+          /usr/bin/python3 -B build_deb.py
+          /usr/bin/python3 -B qa_desktop.py
+          /usr/bin/dpkg-deb --extract dist/simple-vpn_0.1.0-1_all.deb /tmp/simple-vpn-extracted
+      - name: Check extracted package UI with fake VPN services
+        run: xvfb-run -a /usr/bin/python3 -B qa_ui.py --app-root /tmp/simple-vpn-extracted/usr/share/simple-vpn
+      - uses: actions/upload-artifact@v7
+        with:
+          name: simple-vpn-ubuntu-deb
+          path: dist/*.deb
+          if-no-files-found: error
+          retention-days: 14
