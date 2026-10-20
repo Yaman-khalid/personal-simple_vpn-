@@ -1,0 +1,17 @@
+Package: simple-vpn
+Version: @VERSION@
+Section: net
+Priority: optional
+Architecture: all
+Maintainer: @MAINTAINER@
+Homepage: https://github.com/Yaman-khalid/personal-simple_vpn-
+Depends: python3 (>= 3.12), python3-gi (>= 3.48), gir1.2-gtk-4.0 (>= 4.14), gir1.2-adw-1 (>= 1.5), gir1.2-nm-1.0 (>= 1.46), gir1.2-secret-1, network-manager (>= 1.46), network-manager-openvpn-gnome
+Recommends: gnome-keyring
+Installed-Size: @INSTALLED_SIZE@
+Description: Personal desktop interface for Proton OpenVPN configurations
+ Import an OpenVPN configuration, enter Proton OpenVPN credentials,
+ and connect through NetworkManager from a native GTK interface.
+ Passwords can optionally be remembered in the desktop keyring.
+ .
+ No kill switch or independent IP/DNS leak test is included.
+ Intended for Ubuntu 24.04 with GNOME and NetworkManager.
